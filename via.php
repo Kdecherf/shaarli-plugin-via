@@ -39,7 +39,7 @@ function hook_via_render_linklist($data)
 		} else if(!empty($originalUrl)){
 			$html .= '<a href="' . $originalUrl. '" class="via">' . $originalUrl . '</a>';
 		} else{
-			return $data;
+			continue;
 		}
 		
 		$value['link_plugin'][] = $html;
