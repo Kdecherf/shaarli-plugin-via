@@ -20,7 +20,18 @@ function hook_via_render_linklist($data)
 	foreach ($data['links'] as &$value) {
 		$originalUrl = isset($value['original_url']) ? $value['original_url'] : '';
 		$originalLabel = isset($value['original_label']) ? $value['original_label'] : '';
-		$html = '<em class="fa fa-share"></em> ';
+      $originalType = isset($value['original_type']) ? $value['original_type'] : 'normal';
+      switch ($originalType)
+      {
+         case 'retweet':
+            $faIcon = 'retweet';
+            break;
+         case 'normal':
+         default:
+            $faIcon = 'share';
+            break;
+      }
+		$html = '<span class="via fa fa-' . $faIcon . '"></span> ';
 		if(!empty($originalLabel) && !empty($originalUrl)){
 			$html .= '<a href="' . $originalUrl. '" class="via">' . $originalLabel . '</a>';
 		} else if(!empty($originalLabel)){
@@ -55,8 +66,22 @@ function hook_via_render_editlink($data)
     // replace value in HTML if it exists in $data
 	$originalLabel = isset($data['link']['original_label']) ? $data['link']['original_label'] : '';
 	$originalUrl = isset($data['link']['original_url']) ? $data['link']['original_url'] : '';
+   $originalType = isset($data['link']['original_type']) ? $data['link']['original_type'] : '';
+
+   $typeRetweet = $typeNormal = '';
+
+   switch ($originalType)
+   {
+      case 'retweet':
+         $typeRetweet = ' checked="checked"';
+         break;
+      case 'normal':
+      default:
+         $typeNormal = ' checked="checked"';
+         break;
+   }
 	
-	$html = sprintf($html, $originalLabel, $originalUrl);
+	$html = sprintf($html, $originalLabel, $originalUrl, $typeNormal, $typeRetweet);
 
     // field_plugin
     $data['edit_link_plugin'][] = $html;
@@ -85,8 +110,11 @@ function hook_via_save_link($data)
     if (!empty($_POST['lf_original_label'])) {
         $data['original_label'] = escape($_POST['lf_original_label']);
     }
-	if (!empty($_POST['lf_original_url'])) {
+    if (!empty($_POST['lf_original_url'])) {
         $data['original_url'] = escape($_POST['lf_original_url']);
+    }
+    if (!empty($_POST['lf_original_type'])) {
+       $data['original_type'] = escape($_POST['lf_original_type']);
     }
 
     return $data;
