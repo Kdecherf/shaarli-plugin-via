@@ -20,19 +20,18 @@ function hook_via_render_linklist($data)
 	foreach ($data['links'] as &$value) {
 		$originalUrl = isset($value['original_url']) ? $value['original_url'] : '';
 		$originalLabel = isset($value['original_label']) ? $value['original_label'] : '';
-		$html = '<br><span class="via">Via ';
+		$html = '<em class="fa fa-share"></em> ';
 		if(!empty($originalLabel) && !empty($originalUrl)){
-			$html .= '<a href="' . $originalUrl. '">' . $originalLabel . '</a>';
+			$html .= '<a href="' . $originalUrl. '" class="via">' . $originalLabel . '</a>';
 		} else if(!empty($originalLabel)){
 			$html .= $originalLabel;
 		} else if(!empty($originalUrl)){
-			$html .= '<a href="' . $originalUrl. '">' . $originalUrl . '</a>';
+			$html .= '<a href="' . $originalUrl. '" class="via">' . $originalUrl . '</a>';
 		} else{
 			return $data;
 		}
 		
-		$html .= '</span>';
-		$value['description'] = $value['description'] . $html;
+		$value['link_plugin'][] = $html;
 	}
 
     return $data;
