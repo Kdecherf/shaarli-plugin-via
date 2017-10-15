@@ -65,7 +65,7 @@ function hook_via_render_editlink($data)
 
     // replace value in HTML if it exists in $data
 	$originalLabel = isset($data['link']['original_label']) ? $data['link']['original_label'] : '';
-	$originalUrl = isset($data['link']['original_url']) ? $data['link']['original_url'] : isset($_GET['original_url']) ? $_GET['original_url'] : '';
+	$originalUrl = isset($data['link']['original_url']) ? $data['link']['original_url'] : (isset($_GET['original_url']) ? $_GET['original_url'] : '');
    $originalType = isset($data['link']['original_type']) ? $data['link']['original_type'] : '';
 
    $typeRetweet = $typeNormal = '';
