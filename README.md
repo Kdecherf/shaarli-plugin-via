@@ -2,12 +2,12 @@
 
 Shaarli via is a tiny plugin which offers you the possibility to indicate the original source of a link that you share.
 
-It adds 3 fields in the link edition page for the label, the url and the type of the source.
+It adds 2 fields in the link edition page for the label and the url of the source.
 The source is then displayed using the `link_plugin` placeholder wherever it is placed by the current theme.
 
-The source type lets you choose the Font Awesome icon used for the link. There are currently two types:
-* `normal` which uses `fa-share`
-* `retweet` which uses `fa-retweet`
+A Font Awesome icon is displayed at the left of the original source according to its host:
+* `(|mobile.|www.)twitter.com` uses `fa-twitter`
+* Any other host uses `fa-share`
 
 ## Installation
 ### Via Git
