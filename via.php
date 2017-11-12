@@ -21,7 +21,13 @@ function hook_via_render_linklist($data)
 		$originalUrl = isset($value['original_url']) ? $value['original_url'] : '';
 		$originalLabel = isset($value['original_label']) ? $value['original_label'] : '';
 
-      $originalHost = parse_url($value['original_url'])['host'];
+      $originalHost = '';
+      if (!empty($originalUrl)) {
+         $parseUrl = parse_url($originalUrl);
+         if ($parseUrl !== null) {
+            $originalHost = $parseUrl['host'];
+         }
+      }
 
       switch ($originalHost)
       {
@@ -40,7 +46,15 @@ function hook_via_render_linklist($data)
 		} else if(!empty($originalLabel)){
 			$html .= $originalLabel;
 		} else if(!empty($originalUrl)){
-			$html .= '<a href="' . $originalUrl. '" class="via">' . $originalUrl . '</a>';
+         if (preg_match('/twitter.com/i', $parseUrl['host'])) {
+            list(, $_label, ) = explode('/', $parseUrl['path'], 3);
+            $_label = "@{$_label}";
+         }
+         else
+         {
+            $_label = $parseUrl['host'];
+         }
+			$html .= '<a href="' . $originalUrl. '" class="via">' . $_label . '</a>';
 		} else{
 			continue;
 		}
