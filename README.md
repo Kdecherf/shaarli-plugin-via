@@ -9,6 +9,12 @@ A Font Awesome icon is displayed at the left of the original source according to
 * `(|mobile.|www.)twitter.com` uses `fa-twitter`
 * Any other host uses `fa-share`
 
+Starting with version 0.2, this plugin is able to take original source url from
+query string using `original_url` parameter.
+
+Starting with wallabag 2.3, original source url is forwarded when sharing
+articles to Shaarli.
+
 ## Installation
 ### Via Git
 If you use git you can run the following command from within the `plugins` folder of your Shaarli installation:
